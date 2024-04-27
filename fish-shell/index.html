@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish-shell [JetsonNano]</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <script> $(function() {$("#includeHtml").load("/style.html");});</script><div id="includeHtml"></div>
+</head>
+<body>
+
+<big_title> FISH SHELL <br><br>
+    ON JETSON NANO </big_title>
+
+Intro
+==============================================================
+
+In this guide i will show you how to install fish-shell on JetsonNano. And it also should work on latest Jetson devices.
+
+# Video Guide
+
+![](video-guide.mp4)
+
+# Text Guide
+
+1. *Check your system version*
+
+    `lsb_release -a`
+    - In my case the result was:
+        ```
+         Distributor ID:    Ubuntu
+         Description:    Ubuntu 18.04.6 LTS
+         Release:    18.04
+         Codename:    bionic
+        ```
+    We are interested in `Codename`. In my case it was "bionic".
+
+2. *Download fish-shell*.
+
+    Go to download side of fish-shell https://launchpad.net/~fish-shell/+archive/ubuntu/release-3/+packages 
+    (Currently the latest version is "release-3", if you are not sure, you can go https://fishshell.com, and select tab Linux, and Ubuntu download link)
+    
+    You will see a list of fish-shell versions, and you need to select one with corresponding `Codename` as your system, in my case it was a "bionic", so I select it, then select arm64, and then download file with arm64.deb at the end. For me it was `fish_3.7.1-1~bionic_arm64.deb`
+    
+    By default files download into `Downloads` folder, so you should see it there. 
+
+3. *Install fish-shell*
+
+    Go to your terminal of choice, and go to folder fish-shell deb file is located, and run following command:
+    `sudo apt install ./your_fish_shell.deb`
+    for me it was:
+    `sudo apt install ./fish_3.7.1-1~bionic_arm64.deb` 
+    And it should start installation processes.
+    When it installs it, you can check it by typing
+    `fish` in the console, and it will welcome you into fish-shell.
+
+4. *Selection fish-shell by default*
+
+    So to switch to fish-shell you need to type this command:
+    `chsh -s $(which fish)` or `sudo chsh -s $(which fish)`
+    Now, you should reboot the system so everything would be applied
+    `sudo apt reboot`
+    And after reboot, you should just open the console, and the good, nice looking, fish shell. :)
+
+
+</body>
+</html>

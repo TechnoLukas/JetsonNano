@@ -1,0 +1,94 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish-shell [JetsonNano]</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <script> $(function() {$("#includeHtml").load("/style.html");});</script><div id="includeHtml"></div>
+</head>
+<body>
+
+<big_title> PYTHON & VENV <br><br>
+    ON JETSON NANO </big_title>
+
+Intro
+==============================================================
+
+Hello. <br>
+This time I faced an issue that I want to mess around with cool python projects, but i need to have python 3.10 and preferably `python3.10-venv` for environments...<br> And when I try to install it, then it says, that there is no such package.<br> So... I will show you how to build python for jetson nano.
+
+This guide was inspired by https://alitech.io/blog/how-to-install-python-3-10-ubuntu/
+
+Installation Guide
+==============================================================
+
+[NOTE]
+You can build python without SSL, though `pip` won't work.
+
+Download & Build OpenSSL 1.1.1
+```
+cd /opt
+border-leftsudo wget -O openssl.tgz https://ftp.openssl.org/source/old/1.1.1/openssl-1.1.1j.tar.gz 
+sudo tar xzf openssl.tgz
+sudo rm openssl.tgz
+cd openssl-1.1.1j/
+sudo ./config --prefix=/opt/openssl
+sudo make
+sudo make install
+```
+
+Install Python 3.10.6
+```
+cd /opt
+sudo wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+
+sudo tar xzf Python-3.10.0.tgz
+cd Python-3.10.0
+sudo ./configure --with-openssl=/opt/openssl
+```
+
+if you won't use `altinstall` then it can replace your current version.
+```
+sudo make altinstall
+```
+
+Check python version
+```
+python3.10 --version
+```
+
+Personally I like to store python environment in the same folder with my project.
+
+So let's create it.
+
+```
+mkdir PyProject
+cd PyProject
+python3.10 -m venv ./venv
+source venv/bin/activate # source venv/bin/activate.fish  (for fish shell)
+```
+
+Now normal `python` command should work, because we are in the environment.
+ 
+```
+python --version
+```
+
+and now we can upgrade pip
+
+```
+python -m pip install --upgrade pip
+```
+
+And to exit/deactivate environment we can just do:
+
+```
+deactivate
+```
+ 
+ 
+ 
+![](/resources/python-screenshot.png)
+
+
+</body>
+</html>

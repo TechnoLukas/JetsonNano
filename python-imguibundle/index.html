@@ -1,0 +1,179 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish-shell [JetsonNano]</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <script> $(function() {$("#includeHtml").load("/style.html");});</script><div id="includeHtml"></div>
+</head>
+<body>
+
+<big_title> PYTHON IMGUI BUNDLE <br><br>
+    ON JETSON NANO </big_title>
+
+Intro
+==============================================================
+
+![](/resources/python-imguibundle-screenshot.jpeg)
+
+Hello. I really like Python Dear Imgui Bundle, and use it everywhere, so I thought it would be useful to create a guide on building this libary for Jetson Nano with Ubuntu 20 on it. (I use Ubuntu 20 because i was not able to build it on Ubuntu 18)
+
+You must have ubuntu 20 before following my guide:
+follow this Install Ubuntu 20.04 on Jetson Nano - Q-engineering guide to do so.
+You can expiriment with ubuntu 18, but it might not work.
+
+I made a shell-script that installs everything automatically.
+shell script can be found here => https://gist.github.com/TechnoLukas/420bca325758853d6242300122b68176
+
+And also you can just follow the guide bellow
+
+Installation Guide
+==============================================================
+
+```
+sudo apt update
+sudo apt upgrade
+```
+
+Build python with OpenSSL
+
+
+Install OpenSSL 1.1.1
+```
+cd /opt
+sudo wget -O openssl.tgz https://ftp.openssl.org/source/old/1.1.1/openssl-1.1.1j.tar.gz 
+sudo tar xzf openssl.tgz
+sudo rm openssl.tgz
+cd openssl-1.1.1j/
+sudo ./config --prefix=/opt/openssl
+sudo make
+sudo make install
+```
+
+Install Python 3.10.6
+```
+cd /opt
+sudo wget https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+
+sudo tar xzf Python-3.10.0.tgz
+cd Python-3.10.0
+sudo ./configure --with-openssl=/opt/openssl
+sudo make
+sudo make altinstall
+```
+
+Increase space swap:  source => https://www.forecr.io/blogs/programming/how-to-increase-swap-space-on-jetson-modules
+```
+free -h
+
+sudo fallocate -l 16G /swapfile
+ls -lh /swapfile
+
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+free -h
+```
+
+Install cmake 3.25
+```
+wget -O cmake.sh https://github.com/Kitware/CMake/releases/download/v3.25.0/cmake-3.25.0-linux-aarch64.sh
+sudo sh cmake.sh --prefix=/usr/local/ --exclude-subdir
+```
+check cmake version:
+`cmake --version`
+
+Create a folder with Python environment and activate it.
+```
+mkdir ImguiBundleProject
+cd ImguiBundleProject
+python3.10 -m venv ./venv
+source venv/bin/activate # source venv/bin/activate.fish  (for fish shell)
+```
+
+upgrade pip
+```
+python -m pip install --upgrade pip
+```
+
+[pthom/srcml_caller](https://github.com/pthom/srcml_caller)
+must cmake>=3.24
+
+Install requirements
+```
+sudo apt install default-jre
+```
+
+```
+sudo apt-get install --no-install-recommends -y \
+    curl \
+    zip \
+    g++ \
+    make \
+    ninja-build \
+    libxml2-dev \
+    libxml2-utils \
+    libxslt1-dev \
+    libarchive-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    cpio \
+    man \
+    file \
+    dpkg-dev
+```
+
+```
+git clone https://github.com/pthom/srcml_caller.git
+cd srcml_caller
+git submodule update --init # will fetch srcML submodule
+pip install -r requirements-dev.txt
+pip install -v .
+```
+
+
+[pthom/imgui_bundle](https://github.com/pthom/imgui_bundle)
+
+```
+sudo apt install libxinerama-dev
+sudo apt install libxcursor-dev
+```
+
+```
+git clone https://github.com/pthom/imgui_bundle.git
+cd imgui_bundle
+git submodule update --init --recursive # (1)
+pip install -r requirements-dev.txt
+pip install opencv-contrib-python
+pip install -v . # (2)
+```
+
+Going to top repository of this project  (ImguiBundleProject)
+```
+cd ..
+```
+
+installing PyGLM in current environment. 
+```
+./venv/bin/python -m pip install PyGLM
+```
+
+Launching demo_imgui_bundle
+```
+demo_imgui_bundle
+```
+
+Outro
+==============================================================
+
+
+
+Would be awesome to see some python AI projects using this, because it is really powerful library.
+
+
+
+
+
+
+</body>
+</html>
