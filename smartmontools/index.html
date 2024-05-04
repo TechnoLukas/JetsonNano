@@ -1,0 +1,96 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish-shell [JetsonNano]</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> <script> $(function() {$("#includeHtml").load("/style.html");});</script><div id="includeHtml"></div>
+</head>
+<body>
+
+<big_title> PYTHON IMGUI BUNDLE <br><br>
+    ON JETSON NANO </big_title>
+
+Intro
+==============================================================
+
+Hello.  Now i will show you how to get smartmontools working on Jetson Nano. So for example we will be able to measure temperature of our NVME usbdisk. 
+
+In ubuntu 18 we need to build it from source, and for ubuntu 20 we can just need to install it.
+
+Installation Guide
+==============================================================
+
+```
+sudo apt update
+sudo apt upgrade
+```
+
+## for Ubuntu 20
+
+If you want to have Ubuntu 20.04 on Jetson Nano then follow this guide => [Install Ubuntu 20.04 on Jetson Nano - Q-engineering](https://qengineering.eu/install-ubuntu-20.04-on-jetson-nano.html).
+
+
+Install SmartMonTools through apt
+
+```
+sudo apt-get install smartmontools
+```
+
+Now we can get a lot of statistic from the disk.
+```
+sudo smartctl -a /dev/sda
+``` 
+
+If we are only interested in temperature then:
+```
+sudo smartctl -a /dev/sda | grep Temperature
+``` 
+
+## for Ubuntu 18
+
+Going to build it from the source, so  downloading to `opt` dir, than extracting.
+```
+cd /opt
+wget -O smartmontools-7.4.tar.gz https://sourceforge.net/projects/smartmontools/files/smartmontools/7.4/smartmontools-7.4.tar.gz/download
+
+tar zxvf smartmontools-7.4.tar.gz
+
+cd smartmontools-7.4/
+```
+
+Now it is time to configure
+```
+./configure
+```
+if doesn't work then 
+
+```
+./configure --without-libsystemd
+```
+
+And to build
+```
+make
+
+sudo make install
+```
+
+Usage Guide
+==============================================================
+Now we can get a lot of stats from the disk.
+```
+sudo smartctl -a /dev/sda
+``` 
+
+If we are only interested in temperature then:
+```
+sudo smartctl -a /dev/sda | grep Temperature
+``` 
+
+
+
+
+
+
+</body>
+</html>
