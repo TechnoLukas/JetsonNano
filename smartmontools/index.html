@@ -7,15 +7,15 @@
 </head>
 <body>
 
-<big_title> PYTHON IMGUI BUNDLE <br><br>
+<big_title> SMARTMONTOOLS <br><br>
     ON JETSON NANO </big_title>
 
 Intro
 ==============================================================
 
-Hello.  Now i will show you how to get smartmontools working on Jetson Nano. So for example we will be able to measure temperature of our NVME usbdisk. 
+Hello. I want to show you how to get smartmontools working on Jetson Nano, for example for temperature measurement of our connected usb disk. 
 
-In ubuntu 18 we need to build it from source, and for ubuntu 20 we can just need to install it.
+In ubuntu 18 we need to build it from source, and for ubuntu 20 we can just install it.
 
 Installation Guide
 ==============================================================
@@ -77,7 +77,7 @@ sudo make install
 
 Usage Guide
 ==============================================================
-Now we can get a lot of stats from the disk.
+Now we can get a lot of info from the disk.
 ```
 sudo smartctl -a /dev/sda
 ``` 
@@ -87,7 +87,8 @@ If we are only interested in temperature then:
 sudo smartctl -a /dev/sda | grep Temperature
 ``` 
 
-
+![](/resources/smartmontools-screenshot2.png)
+![](/resources/smartmontools-screenshot1.png)
 
 
 
